@@ -19,7 +19,7 @@ const server = http.createServer((req, res)=>{
     });
     return req.on('end', ()=>{ // return here so there is not duplicate of sending header
       const parsedBody = Buffer.concat(body).toString();//this is a buffer
-      fs.writeFileSync('message.txt', parsedBody.split('=')[1]);
+      fs.writeFileSync('message.txt', parsedBody.split('=')[1]);//sync, block code execution
       res.statusCode = 302;//redirecting
       res.setHeader('Location','/');//redirecting
       return res.end();
