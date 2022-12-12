@@ -17,14 +17,15 @@ const server = http.createServer((req, res)=>{
       body.push(chunk);
       console.log(body);
     });
-    req.on('end', ()=>{
+    return req.on('end', ()=>{ // return here so there is not duplicate of sending header
       const parsedBody = Buffer.concat(body).toString();//this is a buffer
       fs.writeFileSync('message.txt', parsedBody.split('=')[1]);
+      res.statusCode = 302;//redirecting
+      res.setHeader('Location','/');//redirecting
+      return res.end();
     });
-    fs.writeFileSync('message.txt', 'Nodejs');
-    res.statusCode = 302;//redirecting
-    res.setHeader('Location','/');//redirecting
-    return res.end();
+
+
   }
   res.setHeader('Content-Type', 'text/html');
   res.write('<html>');
