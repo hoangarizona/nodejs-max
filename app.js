@@ -6,12 +6,22 @@ const server = http.createServer((req, res)=>{
   if(url === '/'){
     res.write('<html>');
     res.write('<head><title>Enter Message</title></head>')
-    res.write('<body><form action="/message" method="POST"><input type="text name="message"><button type="submit">Send</button></form></body>');
+    res.write('<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit">Send</button></form></body>');
     res.write('</html>');
     return res.end();//have return so we dont run another setHeader, write, end
   }
   if(url === '/message' && method === 'POST'){
-    fs.writeFileSync('message.txt', 'DUMMY');
+    const body = [];
+    req.on('data',(chunk) => {
+      console.log(chunk);
+      body.push(chunk);
+      console.log(body);
+    });
+    req.on('end', ()=>{
+      const parsedBody = Buffer.concat(body).toString();//this is a buffer
+      fs.writeFileSync('message.txt', parsedBody.split('=')[1]);
+    });
+    fs.writeFileSync('message.txt', 'Nodejs');
     res.statusCode = 302;//redirecting
     res.setHeader('Location','/');//redirecting
     return res.end();
@@ -24,4 +34,4 @@ const server = http.createServer((req, res)=>{
   return res.end();//no more write after this because it already send res to the client
 });
 
-server.listen(3000);
+server.listen(4000);
