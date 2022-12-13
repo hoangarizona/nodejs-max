@@ -43,5 +43,8 @@ const requestHandler = (req, res)=>{
   handler: requestHandler,
   someText: 'some text'// you can export many things by declaring an object
 }  */
-module.exports.handler = requestHandler;
-module.exports.someText = 'Some text';
+//module.exports.handler = requestHandler;
+//module.exports.someText = 'Some text';
+
+exports.handler = requestHandler;
+exports.someText = 'Some text';
