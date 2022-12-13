@@ -37,4 +37,9 @@ const requestHandler = (req, res)=>{
   res.write('</html>');
   return res.end();//no more write after this because it already send res to the client
 };
-module.exports = request = requestHandler;
+//module.exports = request = requestHandler;// you can export many things by declaring an object
+module.exports =
+{
+  handler: requestHandler,
+  someText: 'some text'// you can export many things by declaring an object
+} 
