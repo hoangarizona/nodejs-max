@@ -38,8 +38,10 @@ const requestHandler = (req, res)=>{
   return res.end();//no more write after this because it already send res to the client
 };
 //module.exports = request = requestHandler;// you can export many things by declaring an object
-module.exports =
+/* module.exports =
 {
   handler: requestHandler,
   someText: 'some text'// you can export many things by declaring an object
-} 
+}  */
+module.exports.handler = requestHandler;
+module.exports.someText = 'Some text';
